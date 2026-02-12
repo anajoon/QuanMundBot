@@ -1,0 +1,5 @@
+// QuanMundBot placeholder file on testnet
+// This file is only a dummy placeholder for now.
+// No real logic, no trading, nothing important here.
+
+console.log("QuanMundBot placeholder running (test only, does nothing).");
