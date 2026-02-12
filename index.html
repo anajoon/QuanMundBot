@@ -3,558 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuanMundBot | خانه‌ی ربات تو</title>
+  <title>QuanMundBot | داشبورد استراتژیک</title>
 
-  <!-- توضیحات برای سئو و شناسایی -->
-  <meta name="description" content="QuanMundBot رباتی استراتژیک برای مدیریت ریسک، سواپ و پایش بازار؛ ساخته شده قدم‌به‌قدم، با دقت و اعتماد." />
-  <meta name="keywords" content="QuanMundBot, کوان ماند بات, ربات ترید, مدیریت ریسک, سواپ, کریپتو" />
-
-  <!-- فونت ساده و سازگار -->
   <style>
-    @font-face {
-      font-family: "VazirLocal";
-      src: local("Vazir"), local("IRANSans");
-    }
-
-    :root {
-      --bg: #050816;
-      --bg-soft: #0b1020;
-      --accent: #3b82f6;
-      --accent-soft: rgba(59, 130, 246, 0.15);
-      --accent-strong: #2563eb;
-      --text-main: #e5e7eb;
-      --text-soft: #9ca3af;
-      --danger: #f97373;
-      --success: #22c55e;
-      --border-soft: #1f2933;
-      --card-radius: 18px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-    }
-
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
       padding: 0;
-    }
-
-    body {
-      font-family: "VazirLocal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      padding: 16px;
-    }
-
-    .page {
-      width: 100%;
-      max-width: 960px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      background: #030712;
+      color: #e5e7eb;
+      font-family: "IRANSans", sans-serif;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7));
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+      background: #0f172a;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(59,130,246,0.3);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #3b82f6;
     }
 
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      background: radial-gradient(circle at 30% 0, #38bdf8, #1d4ed8 40%, #020617 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #e5e7eb;
-      font-weight: 700;
-      font-size: 18px;
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+    .container {
+      padding: 20px;
     }
 
-    .brand-text-main {
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.03em;
-    }
-
-    .brand-text-sub {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .status-pill {
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(22, 163, 74, 0.12);
-      color: #bbf7d0;
-      border: 1px solid rgba(34, 197, 94, 0.4);
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-      gap: 16px;
-    }
-
-    @media (max-width: 768px) {
-      main {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    .card {
-      background: radial-gradient(circle at top left, #111827 0, #020617 55%, #000 100%);
-      border-radius: var(--card-radius);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 16px 16px 14px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-title {
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 6px;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-subtitle {
-      font-size: 13px;
-      color: var(--text-soft);
-      margin-bottom: 14px;
-      line-height: 1.7;
-    }
-
-    .hero-highlight {
-      color: #93c5fd;
-      font-weight: 600;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .pill {
-      font-size: 11px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      color: #cbd5f5;
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .pill-strong {
-      border-color: rgba(59, 130, 246, 0.7);
-      background: rgba(15, 23, 42, 0.95);
-      color: #bfdbfe;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .btn-main {
-      flex: 1 1 140px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, #2563eb, #38bdf8);
-      color: white;
-      font-size: 13px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.55);
-    }
-
-    .btn-main span.icon {
-      font-size: 15px;
-    }
-
-    .btn-ghost {
-      flex: 1 1 120px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-    }
-
-    .mini-note {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-top: 4px;
-    }
-
-    .mini-note strong {
-      color: #e5e7eb;
-      font-weight: 600;
-    }
-
-    .ghazal-box {
-      margin-top: 12px;
-      padding: 10px 11px;
-      border-radius: 14px;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
-      font-size: 11px;
-      line-height: 1.9;
-      color: #e5e7eb;
-    }
-
-    .ghazal-title {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-
-    .ghazal-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .ghazal-hemistich {
-      flex: 1;
-      text-align: right;
-    }
-
-    .side-card-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .side-card-title span.icon {
-      font-size: 15px;
-    }
-
-    .checklist {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 10px;
-      font-size: 11px;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
-    .check-icon {
-      width: 16px;
-      height: 16px;
-      border-radius: 999px;
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #4ade80;
-      margin-top: 1px;
-    }
-
-    .check-text-main {
-      color: #e5e7eb;
-    }
-
-    .check-text-sub {
-      color: #9ca3af;
-      font-size: 10px;
-      margin-top: 1px;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .tag {
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      color: #cbd5f5;
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .tag-accent {
-      border-color: rgba(59, 130, 246, 0.7);
-      color: #bfdbfe;
-      background: rgba(15, 23, 42, 0.95);
-    }
-
-    .status-box {
-      margin-top: 6px;
-      padding: 7px 9px;
+    .section {
+      background: #0b1120;
+      padding: 18px;
       border-radius: 12px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 10px;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(59,130,246,0.25);
     }
 
-    .status-label {
-      color: #9ca3af;
-      font-size: 10px;
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #60a5fa;
     }
 
-    .status-value {
-      font-weight: 600;
-      color: #bfdbfe;
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    #bot-status {
+      margin-top: 15px;
+      color: #22c55a;
+      font-weight: bold;
+    }
+
+    #bot-log {
+      margin-top: 15px;
+      background: #111827;
+      padding: 12px;
+      border-radius: 8px;
+      min-height: 120px;
+      font-size: 14px;
+      overflow-y: auto;
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
     footer {
-      margin-top: 4px;
-      font-size: 10px;
-      color: #6b7280;
       text-align: center;
-    }
-
-    footer span {
-      color: #9ca3af;
-    }
-
-    /* محل اتصال آینده QuanMundBot.js */
-    .dev-note {
-      margin-top: 10px;
-      padding: 7px 9px;
-      border-radius: 10px;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      font-size: 10px;
-      color: #9ca3af;
-    }
-
-    .dev-note code {
-      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 10px;
-      background: rgba(15, 23, 42, 0.9);
-      padding: 2px 4px;
-      border-radius: 4px;
-      color: #e5e7eb;
+      padding: 20px;
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 30px;
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <header>
-      <div class="brand">
-        <div class="brand-logo">Q</div>
-        <div>
-          <div class="brand-text-main">QuanMundBot</div>
-          <div class="brand-text-sub">ربات استراتژیک تو برای بازارهای بی‌رحم</div>
-        </div>
-      </div>
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span>مرحله: استقرار اولیه و تست امن</span>
-      </div>
-    </header>
 
-    <main>
-      <!-- ستون اصلی -->
-      <section class="card">
-        <div class="card-inner">
-          <h1 class="hero-title">خانه‌ی QuanMundBot؛ جایی که ریسک، تصادفی نیست.</h1>
-          <p class="hero-subtitle">
-            این صفحه، نقطه‌ی شروع یک ربات استراتژیک است؛
-            <span class="hero-highlight">هر خط کد، با تأیید، آزمون و اعتماد ساخته شده</span>.
-            این‌جا هنوز خبری از پول واقعی نیست؛ فقط
-            <span class="hero-highlight">آزمایش، مشاهده و مستندسازی</span>.
-          </p>
+  <header>
+    <h1>QuanMundBot</h1>
+    <div>داشبورد استراتژیک و محیط تست امن</div>
+  </header>
 
-          <div class="pill-row">
-            <span class="pill pill-strong">⚙️ نسخه: مرحله تست و استقرار</span>
-            <span class="pill">🧪 شبکه‌ها: Testnet / محیط شبیه‌سازی</span>
-            <span class="pill">📱 طراحی‌شده برای موبایل و ترموکس</span>
-          </div>
+  <div class="container">
 
-          <div class="hero-actions">
-            <button class="btn-main" type="button" onclick="alert('در این نسخه، فقط رابط نمایشی فعال است. اتصال بات بعداً اضافه می‌شود.')">
-              <span class="icon">▶️</span>
-              <span>شروع شبیه‌سازی QuanMundBot</span>
-            </button>
-            <button class="btn-ghost" type="button" onclick="alert('در نسخه‌های بعدی، لاگ زنده و وضعیت بات این‌جا نمایش داده می‌شود.')">
-              <span class="icon">📊</span>
-              <span>نمایش وضعیت زنده (به‌زودی)</span>
-            </button>
-          </div>
+    <div class="section">
+      <div class="section-title">وضعیت ربات</div>
+      <div id="bot-status">در انتظار بارگذاری...</div>
+    </div>
 
-          <p class="mini-note">
-            <strong>یادداشت:</strong>
-            این صفحه فقط پوسته‌ی امن و نمایشی است. منطق اصلی QuanMundBot در فایل جداگانه
-            <code>QuanMundBot.js</code>
-            متصل خواهد شد، بعد از تکمیل همه‌ی تست‌ها.
-          </p>
+    <div class="section">
+      <div class="section-title">شبیه‌سازی</div>
+      <button onclick="startSimulation()">شروع شبیه‌سازی QuanMundBot</button>
+      <div id="bot-log"></div>
+    </div>
 
-          <div class="ghazal-box">
-            <div class="ghazal-title">غزل QuanMundBot – نسخه‌ی استقرار</div>
-            <div class="ghazal-line">
-              <div class="ghazal-hemistich">در دلِ بازارِ شب، این رباتِ هوشیار ماست</div>
-              <div class="ghazal-hemistich">هر قدم با احتیاط، عهدِ تو با او به‌جاست</div>
-            </div>
-            <div class="ghazal-line">
-              <div class="ghazal-hemistich">نه شتاب و نه هوس، نه قمار و نه غرور</div>
-              <div class="ghazal-hemistich">هر چه سازد، مستند؛ هر چه گوید، بی‌ریاست</div>
-            </div>
-          </div>
+    <div class="section">
+      <div class="section-title">توضیحات</div>
+      <p>
+        این داشبورد نسخه‌ی حرفه‌ای و پایه‌ای QuanMundBot است.  
+        منطق اصلی ربات در فایل QuanMundBot.js بارگذاری می‌شود و این صفحه فقط رابط کاربری رسمی است.
+      </p>
+    </div>
 
-          <div class="dev-note">
-            <strong>یادداشت فنی برای آینده:</strong><br />
-            در مرحله‌ی بعد، اسکریپت اصلی بات را به این صفحه متصل می‌کنیم:
-            <br />
-            <code>&lt;script src="QuanMundBot.js"&gt;&lt;/script&gt;</code>
-            <br />
-            و سپس از یک نقطه‌ی ورودی مثل
-            <code>QuanMundBot.init()</code>
-            برای شروع استفاده می‌کنیم.
-          </div>
-        </div>
-      </section>
-
-      <!-- ستون کناری -->
-      <aside class="card">
-        <div class="card-inner">
-          <div class="side-card-title">
-            <span class="icon">📋</span>
-            <span>چک‌لیست مرحله‌ی فعلی (استقرار روی Pages)</span>
-          </div>
-
-          <ul class="checklist">
-            <li class="check-item">
-              <div class="check-icon">1</div>
-              <div>
-                <div class="check-text-main">ساخت فایل index.html روی موبایل</div>
-                <div class="check-text-sub">این مرحله با همین فایل انجام می‌شود؛ فقط ذخیره و آماده‌سازی پوشه لازم است.</div>
-              </div>
-            </li>
-            <li class="check-item">
-              <div class="check-icon">2</div>
-              <div>
-                <div class="check-text-main">آپلود پوشه در Cloudflare Pages</div>
-                <div class="check-text-sub">یک پروژه جدید Pages ساخته می‌شود و این فایل به‌عنوان ریشه‌ی سایت آپلود می‌گردد.</div>
-              </div>
-            </li>
-            <li class="check-item">
-              <div class="check-icon">3</div>
-              <div>
-                <div class="check-text-main">تأیید آدرس نهایی (مثلاً quanmundbot.pages.dev)</div>
-                <div class="check-text-sub">این آدرس، نقطه‌ی اتصال بعدی برای Tunnel و بات خواهد بود.</div>
-              </div>
-            </li>
-          </ul>
-
-          <div class="tag-row">
-            <span class="tag tag-accent">بدون پول واقعی</span>
-            <span class="tag">فقط تست و مشاهده</span>
-            <span class="tag">قابل بازگشت در هر لحظه</span>
-            <span class="tag">مستندسازی قدم‌به‌قدم</span>
-          </div>
-
-          <div class="status-box">
-            <div>
-              <div class="status-label">وضعیت فعلی پروژه</div>
-              <div class="status-value">در حال استقرار رابط وب امن</div>
-            </div>
-            <div>
-              <div class="status-label">مرحله بعد</div>
-              <div class="status-value">اتصال QuanMundBot.js و Tunnel</div>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      ساخته شده قدم‌به‌قدم، با تأیید و اعتماد — <span>QuanMundBot</span>
-    </footer>
   </div>
 
-  <!-- در این نسخه، فقط اسکریپت نمایشی ساده -->
-  <script>
-    // این‌جا فعلاً فقط می‌توانیم رفتارهای نمایشی سبک داشته باشیم.
-    // منطق اصلی QuanMundBot بعداً از فایل جداگانه بارگذاری می‌شود.
+  <footer>
+    نسخه حرفه‌ای • QuanMundBot © 2025
+  </footer>
 
-    // مثال: نمایش یک پیام کوچک در کنسول برای تأیید استقرار
-    console.log("QuanMundBot landing page loaded. Ready for next integration step.");
+  <script>
+    function startSimulation() {
+      const logBox = document.getElementById("bot-log");
+      logBox.innerHTML += "<div>شبیه‌سازی آغاز شد...</div>";
+    }
   </script>
+
+  <script src="QuanMundBot.js"></script>
+
 </body>
 </html>
